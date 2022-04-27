@@ -1,7 +1,7 @@
 node_modules/
- config/default.json
- config/production.json
- .env
+config/default.json
+config/production.json
+.env
 
 .vscode/*
 !.vscode/settings.json
