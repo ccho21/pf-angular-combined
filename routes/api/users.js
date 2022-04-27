@@ -14,7 +14,9 @@ const User = require('../../models/User');
 //  @access     Public
 router.get('/:id', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select('-password +firstname +lastname');
+    const user = await User.findById(req.params.id).select(
+      '-password +firstname +lastname'
+    );
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -81,7 +83,8 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.JWT_SECRET,
+        // config.get('jwtSecret'),
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
