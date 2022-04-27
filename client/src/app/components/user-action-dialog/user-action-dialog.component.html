@@ -1,0 +1,46 @@
+<a class="section-link text-black" (click)="openActionModal(userActions)">
+  <mat-icon> more_horiz </mat-icon>
+</a>
+
+<ng-template #userActions let-modal>
+  <div class="user-action">
+    <div>
+      <div>
+        <div class="px-3 py-3 text-center">
+          <a class="section-link text-black" [mat-dialog-close]="true">Follow</a>
+        </div>
+      </div>
+      <div *ngIf="isSameAuthor">
+        <hr class="m-0" />
+        <div class="py-3 text-center">
+          <a class="section-link text-black" [mat-dialog-close]="true" (click)="editPost(post)"
+            >Edit</a
+          >
+        </div>
+      </div>
+      <div *ngIf="isSameAuthor">
+        <hr class="m-0" />
+        <div class="px-3 py-3 text-center text-danger">
+          <a
+            class="section-link text-black"
+            [mat-dialog-close]="true"
+            (click)="deletePost(post, confirmActions)"
+            >Delete
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #confirmActions let-modal>
+  <mat-dialog-content class="mat-typography">
+    <h3>Are you sure you want to delete the post?</h3>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial color="warn">
+      Delete
+    </button>
+  </mat-dialog-actions>
+</ng-template>

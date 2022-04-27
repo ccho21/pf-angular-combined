@@ -1,0 +1,68 @@
+<div class="p-1">
+  <div class="media cd-comment">
+    <div class="mt-1 me-1" href="#">
+      <div class="">
+        <img
+          alt=""
+          class=" img-thumbnail img-circle img-fluid"
+          [src]="comment?.author?.thumbnail"
+          width="40"
+        />
+      </div>
+    </div>
+    <div class="media-body">
+      <div class="cd-comment-content">
+        <div>
+          <a class="section-link text-black">
+            {{ comment?.author?.username }}
+          </a>
+        </div>
+        <a href="" class="d-block me-1">
+          {{ comment?.replyTo }}
+        </a>
+        <div class="section-content flex-grow-1">
+          {{ comment?.content }}
+        </div>
+        <!-- functions -->
+        <!-- <div class="cd-comment-actions" *ngIf="">
+          <a>
+            <mat-icon> more_horiz </mat-icon>
+          </a>
+        </div> -->
+      </div>
+      <div class="cd-comment-function">
+        <div class="me-2">
+          <span class="text-muted" *ngIf="comment?.updatedAt; else createAt">
+            {{ comment?.updatedAt | postTime }}
+          </span>
+          <ng-template #createAt>
+            <span class="section-link fw-normal text-xs text-black-50">
+              {{ comment?.createdAt | postTime }}
+            </span>
+          </ng-template>
+        </div>
+        <div>
+          <a
+            class="section-link text-xs text-black-50"
+            (click)="reply(comment)"
+            >reply</a
+          >
+        </div>
+      </div>
+
+      <div>
+        <a> </a>
+      </div>
+    </div>
+    <div>
+      <app-likes
+        [isLiked]="isCommentLiked(comment, userId)"
+        [userId]="userId"
+        [postId]="postId"
+        [commentId]="comment?._id"
+        [likeStyle]="{ size: '15px', color: '#c51104' }"
+      >
+      </app-likes>
+    </div>
+  </div>
+</div>

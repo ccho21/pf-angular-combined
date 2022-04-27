@@ -1,0 +1,36 @@
+<mat-form-field class="w-100">
+  <div class="upload-file">
+    <mat-toolbar>
+      <!-- Display files names -->
+      <input
+        matInput
+        readonly
+        name="name"
+        class="file-name"
+        value="{{
+          selectedFiles?.length
+            ? selectedFiles?.length + ' files'
+            : 'No file uploaded'
+        }}"
+      />
+      <!-- Browse Button -->
+      <button
+        mat-mini-fab
+        color="primary"
+        class="upload-btn"
+        (click)="fileUpload.click()"
+      >
+        <mat-icon>attach_file</mat-icon>
+      </button>
+    </mat-toolbar>
+    <!-- Fetch selected filed on change -->
+    <input
+      type="file"
+      class="file-input"
+      [accept]="requiredFileType"
+      (change)="onFileSelected($event)"
+      [multiple]="uploadMode === 'multiple'"
+      #fileUpload
+    />
+  </div>
+</mat-form-field>

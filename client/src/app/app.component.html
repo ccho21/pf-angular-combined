@@ -1,0 +1,15 @@
+<header>
+  <app-navigation></app-navigation>
+</header>
+
+<main class="">
+  <div class="spinner-container" *ngIf="loading; else elseBlock">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #elseBlock>
+    <router-outlet></router-outlet>
+  </ng-template>
+</main>
+<footer>
+  <!-- <app-footer></app-footer> -->
+</footer>

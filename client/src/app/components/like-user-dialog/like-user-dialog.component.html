@@ -1,0 +1,51 @@
+<div>
+  <div *ngIf="post?.likes?.length; else elseBlock">
+    <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center">
+        <span class="section-content"> Liked by </span>
+        <a class="section-link text-sm text-black ps-2" (click)="openLikes(likes)">
+          {{ post && post.likes[0].author.username }}
+        </a>
+      </div>
+
+      <div *ngIf="post && post.likes.length > 1">
+        <div class="d-flex">
+          <span class="text-sm"> and </span>
+          <a class="section-link text-sm text-black px-1" (click)="openLikes(likes)">
+            others
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock>
+    <span> Pleaes like this post. </span>
+  </ng-template>
+</div>
+
+<ng-template #likes let-modal>
+  <div>
+    <h2 class="my-4 text-center">LIKES</h2>
+  </div>
+  <hr />
+  <div class="user-action p-4">
+    <div *ngFor="let like of post?.likes">
+      <div class="d-flex align-items-center">
+        <div>
+          <img
+            alt=""
+            width="40"
+            class="img-thumbnail img-circle img-fluid"
+            [src]="like.author?.thumbnail"
+          />
+        </div>
+        <div>
+          {{ like.author?.username }}
+        </div>
+        <div class="flex-grow-1 text-end">
+          <button mat-button>Follow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

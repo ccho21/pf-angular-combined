@@ -1,0 +1,27 @@
+.upload-file {
+  width: 100%;
+  .file-name {
+    font-size: 1.4rem;
+  }
+  .myform-wrapper {
+    .mat-form-field {
+      width: 100% !important;
+    }
+
+    .mat-toolbar-single-row {
+      height: auto !important;
+      background: transparent;
+    }
+  }
+
+  .file-input {
+    position: absolute;
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    cursor: pointer;
+  }
+}

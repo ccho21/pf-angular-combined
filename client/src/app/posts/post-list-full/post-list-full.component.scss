@@ -1,0 +1,109 @@
+.d-post {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid lightgray;
+
+  .d-post-heading {
+    padding: 1rem;
+    text-align: left;
+  }
+
+  &-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    &-arrrow-left {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 1rem;
+    }
+    &-arrrow-right {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 1rem;
+    }
+  }
+  &-box-left {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    z-index: 0;
+    &:before {
+      content: "";
+      display: block;
+      padding-top: 100%;
+    }
+  }
+  &-box-right {
+    width: 100%;
+  }
+
+  &-gallery {
+    display: flex;
+    align-items: center;
+    background-color: black;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  &-img {
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  &-contents {
+    text-align: left;
+
+    .d-post-comments {
+      padding: 1rem;
+    }
+    .d-post-detail {
+      font-size: 0.8rem;
+      padding: 1rem;
+      &-functions {
+        display: flex;
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+      }
+      &-likes {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.3rem;
+      }
+    }
+    .d-post-comment-write {
+      border-top: 0.8px solid lightgray;
+    }
+  }
+}
+
+.d-user-liked-post {
+  font-size: 0.8rem;
+  .user-detail {
+    font-size: inherit;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+  }
+  button {
+    font-size: inherit;
+  }
+  .img-thumbnail {
+    height: 1.8rem;
+  }
+  .modal-body {
+    height: 20rem;
+  }
+}

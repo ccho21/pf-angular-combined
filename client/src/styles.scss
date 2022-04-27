@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Raleway:ital,wght@0,100;0,200;1,100;1,200&family=Roboto&display=swap");
+@import "~swiper/css/bundle";
+
+@import "./styles/variables";
+@import "./styles/colours";
+@import "./styles/mixins";
+@import "./styles/fonts";
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f3f3f3;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background: #a3a3a3;
+}
+
+.img-circle {
+  border-radius: 50% !important;
+  max-width: 100%;
+}
+
+.img-thumbnail {
+  width: 4rem;
+  height: 4rem;
+  margin: 0.5rem;
+}

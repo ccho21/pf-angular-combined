@@ -1,0 +1,35 @@
+<div class="row" *ngIf="posts">
+  <div
+    class="col-lg-4 col-md-6 text-center mb-4 px-0 px-sm-3"
+    *ngFor="let post of posts"
+  >
+    <!-- <a href="" [routerLink]="['/posts', post._id]" class="d-block"> -->
+    <a href="#" (click)="openDialog(post, $event)" class="d-block">
+      <div class="post">
+        <div class="post-box">
+          <div
+            class="post-bg"
+            [ngStyle]="{ backgroundImage: getBackgroundImageUrl(post) }"
+          ></div>
+          <div class="post-content">
+            <div class="post-content-title">
+              <mat-icon>title</mat-icon>: {{ post.content.substring(0, 10) }}
+            </div>
+
+            <div class="post-content-icons">
+              <div class="px-2">
+                <mat-icon>favorite</mat-icon> {{ post.likes?.length }}
+              </div>
+              <div class="px-2">
+                <mat-icon>question_answer</mat-icon> {{ post.comments?.length }}
+              </div>
+              <div class="px-2">
+                <mat-icon>remove_red_eye</mat-icon> {{ post.views?.length }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

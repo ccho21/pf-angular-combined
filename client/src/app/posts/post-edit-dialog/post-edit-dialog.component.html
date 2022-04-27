@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<mat-dialog-content>
+  <ng-container *ngIf="form">
+    <div class="spinner-container" *ngIf="loading$ | async">
+      <mat-spinner></mat-spinner>
+    </div>
+    <ng-container [formGroup]="form" class="login-form">
+      <div>
+        <app-upload-files
+          [mode]="'multiple'"
+          (imageEmit)="addImages($event)"
+          class="d-block w-100"
+        >
+        </app-upload-files>
+      </div>
+
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Content</mat-label>
+        <textarea
+          matInput
+          placeholder="Content"
+          formControlName="content"
+        ></textarea>
+      </mat-form-field>
+
+
+      
+    </ng-container>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Close</button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!form?.valid || (this.loading$ | async)"
+    [mat-dialog-close]="true"
+    (click)="onSubmit()"
+  >
+    Save
+  </button>
+</mat-dialog-actions>

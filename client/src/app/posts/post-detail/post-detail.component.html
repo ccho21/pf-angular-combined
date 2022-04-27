@@ -1,0 +1,142 @@
+<div *ngIf="user$ | async as user">
+  <div class="d-post-wrapper" *ngIf="post$ | async as post">
+    <div class="d-post">
+      <div class="d-post-box-left">
+        <div class="">
+          <div class="d-post-gallery">
+            <div class="w-100 h-100">
+              <swiper
+                [slidesPerView]="1"
+                [spaceBetween]="50"
+                (slideChange)="onSlideChange()"
+                [navigation]="true"
+                [pagination]="{ clickable: true }"
+                [scrollbar]="{ draggable: true }"
+                class="h-100"
+              >
+                <ng-template
+                  *ngFor="let image of post.images; let i = index"
+                  swiperSlide
+                  class="text-white text-center"
+                >
+                  <div
+                    class="d-post-img"
+                    [ngStyle]="{
+                      backgroundImage: getBackgroundImageUrl(image)
+                    }"
+                  ></div>
+                </ng-template>
+              </swiper>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-post-box-right">
+        <div class="d-post-box-right-container">
+          <div class="d-post-contents">
+            <div class="d-post-heading d-flex align-items-center">
+              <div class="align-self-center">
+                <img
+                  class="img-thumbnail img-circle img-no-padding img-responsive img-fluid"
+                  [src]="post.author?.thumbnail"
+                  width="40"
+                />
+              </div>
+              <div class="font-weight-bold flex-grow-1">
+                <a
+                  class="section-link text-md text-black"
+                  href=""
+                  [routerLink]="['/user', post.author?._id]"
+                >
+                  {{ post.author?.username }}
+                </a>
+              </div>
+              <div class="pr-2">
+                <app-user-action-dialog
+                  [post]="post"
+                  [userId]="user._id"
+                ></app-user-action-dialog>
+              </div>
+            </div>
+
+            <div class="d-post-comments">
+              <app-comments
+                [comments]="post.comments"
+                [postId]="postId"
+                [userId]="user._id"
+              ></app-comments>
+            </div>
+
+            <!-- Post Detail -->
+            <div class="d-post-detail">
+              <div class="row d-post-detail-functions">
+                <div class="col-md-12">
+                  <div class="d-flex">
+                    <div>
+                      <app-likes
+                        [isLiked]="isPostLiked(post, user._id)"
+                        [postId]="postId"
+                        [userId]="user._id"
+                        [likeStyle]="{ color: '#c51104' }"
+                      >
+                      </app-likes>
+                    </div>
+                    <div class="ms-2">
+                      <mat-icon>bookmark_border</mat-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row d-post-detail-likes">
+                <div class="col-md-12">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <app-like-user-dialog [post]="post">
+                      </app-like-user-dialog>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-post-content">
+              <div class="mt-1 me-1" href="#">
+                <!-- <div class="">
+                  <img
+                    alt=""
+                    class="img-thumbnail img-circle img-fluid"
+                    [src]="post.author?.thumbnail"
+                    width="40"
+                  />
+                </div> -->
+              </div>
+              <div>
+                <a class="section-link text-black me-1 mb-0">
+                  {{ post.author?.username }}
+                </a>
+              </div>
+
+              <div class="section-content flex-grow-1 mb-0">
+                {{ post?.content }}
+              </div>
+              <!-- functions -->
+              <div class="cd-comment-actions" *ngIf="">
+                <a>
+                  <mat-icon> more_horiz </mat-icon>
+                </a>
+              </div>
+            </div>
+
+            <!-- comment -->
+            <div class="d-post-comment-write">
+              <app-comment-create
+                [post]="post"
+                [user]="user"
+              ></app-comment-create>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

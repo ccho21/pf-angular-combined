@@ -1,0 +1,32 @@
+<mat-card class="post-new">
+  <mat-card-title class="my-4">Upload a new post</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" class="login-form">
+      <div>
+        <app-upload-files
+          [mode]="'multiple'"
+          (imageEmit)="addImages($event)"
+          class="d-block w-100"
+        >
+        </app-upload-files>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Textarea</mat-label>
+        <textarea
+          matInput
+          placeholder="Content"
+          formControlName="content"
+        ></textarea>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSubmit()"
+        [disabled]="!form?.valid || (this.loading$ | async)"
+      >
+        Save
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

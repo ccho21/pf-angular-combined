@@ -1,0 +1,47 @@
+.text-xl {
+  font-size: 3.5rem;
+}
+
+.text-lg {
+  font-size: 3rem;
+}
+
+.text-md {
+  font-size: 1.6rem;
+}
+
+.text-sm {
+  font-size: 1.4rem;
+}
+.text-xs {
+  font-size: 1.2rem;
+}
+
+.main-logo {
+}
+
+.section-title {
+  @extend .text-lg;
+}
+.section-sub-title {
+}
+.section-content {
+  @extend .text-sm;
+  font-weight: 400;
+}
+
+.section-link {
+  @extend .text-md;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+  &:hover,
+  &:active,
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+    color: $main-color-black;
+    outline: none;
+  }
+}

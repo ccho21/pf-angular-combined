@@ -1,0 +1,24 @@
+<div class="p-comments">
+  <ul class="list-group list-unstyled">
+    <!-- CLICK LIKE REFRESHES ALL THE COMMENTS RIGHT NOW. -->
+    <!-- BECAUSE OF THAT, THE IMAGES THAT ARE FROM  -->
+    <li *ngFor="let comment of comments; index as i">
+      <app-comment
+        [comment]="comment"
+        [postId]="postId"
+        [userId]="userId"
+      ></app-comment>
+      <div class="ps-5" *ngIf="comment.comments && comment.comments.length > 0">
+        <ul class="list-group list-unstyled">
+          <li *ngFor="let subComment of comment.comments; index as i">
+            <app-comment
+              [comment]="subComment"
+              [postId]="postId"
+              [userId]="userId"
+            ></app-comment>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,16 @@
+.comment-create {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  & > textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    &:focus,
+    &:hover,
+    &:active {
+      outline: none;
+    }
+  }
+}

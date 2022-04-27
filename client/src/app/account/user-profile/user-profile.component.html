@@ -1,0 +1,79 @@
+<div *ngIf="user$ | async as user">
+    <div class="container py-5" *ngIf="userPosts$ | async as posts">
+      <div class="row align-items-center">
+        <div class="col-md-3 text-center">
+          <div>
+            <img
+              class="img-fluid rounded-circle"
+              [src]="user.thumbnail"
+              alt=""
+              style="width: 100px; height: 100px"
+            />
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="row pb-3">
+            <div class="col-md-12 pb-3">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <h2>
+                    {{ user.username }}
+                  </h2>
+                </div>
+                <div>
+                  <div class="font-weight-bold flex-grow-1">
+                    <a href="" routerLink="/posts/create">
+                      <strong> Create a post </strong>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {{ user.firstname }}
+                {{ user.lastname }}
+              </div>
+              <div>
+                {{ user.email }}
+              </div>
+            </div>
+          </div>
+          <div class="row pb-3">
+            <div class="col-md-4">
+              <div>
+                <strong>{{ posts && posts.length }}</strong> posts
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div><strong>0</strong> followers</div>
+            </div>
+            <div class="col-md-4">
+              <div><strong>0</strong> following</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-12">
+          <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+            <mat-tab label="Posts">
+              <div class="p-5">
+                <app-post-list [posts]="userPosts$ | async"></app-post-list>
+              </div>
+            </mat-tab>
+            <mat-tab label="Liked">
+              <div class="p-5">
+                <app-post-list [posts]="userPostsLiked$ | async"></app-post-list>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  
