@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://ccho21:zzabking11@charlescho.h9shm.mongodb.net/pf-angular?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken",
+  "githubClientId": "c86e232ccad038d9822f",
+  "githubSecret": "ecb7ba342a843271b8f2e25316642ca906436cc6"
+}
