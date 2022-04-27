@@ -32,7 +32,7 @@ export class PostService {
     private dialog: MatDialog
   ) {}
   loadPosts(): Observable<Post[]> {
-    return this.http.get('http://localhost:5000/api/posts').pipe(
+    return this.http.get('/api/posts').pipe(
       map((res) => {
         console.log(res);
         return res as Post[];
@@ -41,7 +41,7 @@ export class PostService {
   }
 
   findPostById(postId: string | null): Observable<Post> {
-    return this.http.get(`http://localhost:5000/api/posts/${postId}`).pipe(
+    return this.http.get(`/api/posts/${postId}`).pipe(
       map((res) => {
         return res as Post;
       })
@@ -51,7 +51,7 @@ export class PostService {
   savePost(postId: string, post: Partial<Post>): Observable<Post> {
     postId = postId ? postId : '';
     return this.http
-      .post<Post>(`http://localhost:5000/api/posts/${postId}`, post)
+      .post<Post>(`/api/posts/${postId}`, post)
       .pipe(
         tap((post: Post) => {
           this.store.dispatch(postCreated({ post }));
@@ -64,7 +64,7 @@ export class PostService {
     console.log('POST Id ', postId, '### CHANGES ', changes);
     postId = postId ? postId : '';
     return this.http
-      .put<Post>(`http://localhost:5000/api/posts/${postId}`, changes)
+      .put<Post>(`/api/posts/${postId}`, changes)
       .pipe(
         tap((post: Post) => {
           console.log('[UPDATE POST EFFECT] has been done successfuly', post);
@@ -74,7 +74,7 @@ export class PostService {
 
   deletePost(postId: string) {
     return this.http
-      .delete<Post>(`http://localhost:5000/api/posts/${postId}`)
+      .delete<Post>(`/api/posts/${postId}`)
       .pipe(
         tap((post: Post) => {
           console.log('[DELETE POST] has been done successfuly', post);
@@ -86,7 +86,7 @@ export class PostService {
   addComment(comment: Comment, postId: string): Observable<Post> {
     return this.http
       .post<Comment[]>(
-        `http://localhost:5000/api/comments/p/${postId}`,
+        `/api/comments/p/${postId}`,
         comment
       )
       .pipe(
@@ -112,7 +112,7 @@ export class PostService {
     commentId = commentId ? commentId : '';
     return this.http
       .post<Comment[]>(
-        `http://localhost:5000/api/comments/p/${postId}/r/${commentId}`,
+        `/api/comments/p/${postId}/r/${commentId}`,
         comment
       )
       .pipe(
@@ -138,7 +138,7 @@ export class PostService {
     commentId = commentId ? `c/${commentId}` : '';
     return this.http
       .post<Like[] | Comment[]>(
-        `http://localhost:5000/api/likes/p/${postId}/${commentId}`,
+        `/api/likes/p/${postId}/${commentId}`,
         {}
       )
       .pipe(
@@ -159,7 +159,7 @@ export class PostService {
     commentId = commentId ? `c/${commentId}` : '';
     return this.http
       .delete<Like[] | Comment[]>(
-        `http://localhost:5000/api/likes/p/${postId}/${commentId}`,
+        `/api/likes/p/${postId}/${commentId}`,
         {}
       )
       .pipe(
@@ -204,7 +204,7 @@ export class PostService {
   addView(postId: string): Observable<View[]> {
     console.log('add view working?', postId);
     return this.http
-      .put<View[]>(`http://localhost:5000/api/views/${postId}`, {})
+      .put<View[]>(`/api/views/${postId}`, {})
       .pipe(
         map((res: View[]) => {
           console.log('RES!!! in VIEW', res);

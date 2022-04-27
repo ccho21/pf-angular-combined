@@ -17,7 +17,7 @@ export class UserService {
 
   getUserById(userId: string): Observable<User> {
     console.log('GET USER BY ID IN SERVICE', userId);
-    return this.http.get(`http://localhost:5000/api/users/${userId}`).pipe(
+    return this.http.get(`/api/users/${userId}`).pipe(
       map((user) => {
         console.log(user);
         return user as User;
