@@ -3,7 +3,6 @@ const router = express.Router();
 
 const auth = require('../../middleware/auth');
 
-
 const likeController = require('../../controllers/likeController');
 
 //  @route      PUT api/likes/p/:id

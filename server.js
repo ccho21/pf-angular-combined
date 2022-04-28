@@ -36,7 +36,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/dist/pf-angular'));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'pf-angular', 'index.html'));
+    res.sendFile(
+      path.resolve(__dirname, 'client', 'dist', 'pf-angular', 'index.html')
+    );
   });
 }
 

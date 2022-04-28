@@ -11,7 +11,6 @@ exports.createComment = async (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  
 
   try {
     const post = await Post.findById(req.params.postId);

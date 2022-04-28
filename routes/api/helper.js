@@ -11,7 +11,7 @@ const helper = {
     );
 
     return new Date(now_utc).toUTCString();
-  }
+  },
 };
 
 module.exports = helper;

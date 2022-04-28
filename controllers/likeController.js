@@ -7,12 +7,10 @@ exports.postLike = async (req, res) => {
   try {
     const post = await Post.findById(req.params.postId);
 
-    
     // Check if the post has already been liked
     if (post.likes.some((like) => like.user.toString() === req.user.id)) {
       return res.status(400).json({ msg: 'Post already liked' });
     }
-
 
     // create Like Object
     const like = new Like({
@@ -89,7 +87,6 @@ exports.postCommentLike = async (req, res) => {
     // save the sub like and populate the fields for author
     const query = await like.save();
     const populatedLike = await query.populate('author').execPopulate();
-    let updatedComments = [];
     comment.likes.push(populatedLike);
     comment.save();
 
