@@ -10,7 +10,7 @@ exports.defaultParam = (req, res, next) => {
     req.query.limit = '1';
   }
   if (!req.query.sort) {
-    req.query.sort = '-createdAt';
+    req.query.sort = 'createdAt';
   }
   next();
 };
@@ -24,6 +24,7 @@ exports.getPosts = async (req, res) => {
       .limitFields()
       .paginate();
     const posts = await features.query;
+
     res.json({
       status: 'success',
       results: posts.length,

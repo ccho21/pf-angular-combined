@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const Populate = require('../util/autopopulate');
+const Populate = require('../util/autopopulate');
 
 const { Schema } = mongoose;
 const LikeSchema = new mongoose.Schema({
@@ -13,6 +13,11 @@ const LikeSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
+  postId: {
+    type: Schema.Types.ObjectId,
+    ref: 'post',
+    required: true,
+  },
   parentId: {
     type: String,
     required: true,
@@ -23,6 +28,6 @@ const LikeSchema = new mongoose.Schema({
   },
 });
 
-// LikeSchema.pre('findOne', Populate('author')).pre('find', Populate('author'));
+LikeSchema.pre('findOne', Populate('author')).pre('find', Populate('author'));
 
 module.exports = mongoose.model('like', LikeSchema);
