@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -13,7 +15,6 @@ import { PostsEffects } from './posts.effects';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { SharedModule } from '@app/shared/shared.module';
 import { ComponentsModule } from '@app/components/components.module';
-
 
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostListComponent } from './post-list/post-list.component';
@@ -36,6 +37,7 @@ import { PostListFullComponent } from './post-list-full/post-list-full.component
     PipesModule,
     ComponentsModule,
     SharedModule,
+    InfiniteScrollModule,
   ],
   declarations: [
     PostDetailComponent,

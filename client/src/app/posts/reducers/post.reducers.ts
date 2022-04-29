@@ -35,9 +35,11 @@ export const postsReducer = createReducer(
   // add a post
   on(PostActions.postCreated, (state, { post }) => adapter.addOne(post, state)),
 
+  on(PostActions.addPosts, (state, { posts }) => {
+    return adapter.addMany(posts, state);
+  }),
+
   on(PostActions.postUpdated, (state, action) => {
-    console.log('### state in REDUCER : ', state);
-    console.log('### ACTION in REDUCER ', action);
     return adapter.updateOne(action.update, state);
   }),
   on(PostActions.postDeleted, (state, { id }) => {

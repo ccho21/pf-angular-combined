@@ -1,144 +1,163 @@
-<div class="row" *ngIf="posts">
-  <div
-    class="offset-lg-3 col-lg-6 text-center my-4 px-0 px-sm-3"
-    *ngFor="let post of posts"
-  >
-    <div class="d-post" *ngIf="user$ | async as user">
-      <div class="d-post-heading d-flex align-items-center text-start">
-        <div class="align-self-center">
-          <img
-            class="img-thumbnail img-circle img-no-padding img-responsive img-fluid"
-            [src]="post.author?.thumbnail"
-            width="40"
-          />
+<div
+  class="search-results"
+  infinite-scroll
+  [infiniteScrollDistance]="scrollDistance"
+  [infiniteScrollThrottle]="throttle"
+  (scrolled)="onScrollDown($event)"
+  [scrollWindow]="true"
+>
+  <div class="row" *ngIf="posts">
+    <div
+      class="offset-lg-3 col-lg-6 text-center my-4 px-0 px-sm-3"
+      *ngFor="let post of posts"
+    >
+      <div class="d-post" *ngIf="user$ | async as user">
+        <div class="d-post-heading d-flex align-items-center text-start">
+          <div class="align-self-center">
+            <img
+              class="img-thumbnail img-circle img-no-padding img-responsive img-fluid"
+              [src]="post.author?.thumbnail"
+              width="40"
+            />
+          </div>
+          <div class="font-weight-bold flex-grow-1">
+            <a
+              href="#"
+              class="section-link text-md text-black"
+              [routerLink]="['/user', post.author?._id]"
+            >
+              {{ post.author?.username }}
+            </a>
+          </div>
+          <div class="pr-2">
+            <app-user-action-dialog
+              [post]="post"
+              [userId]="user._id"
+            ></app-user-action-dialog>
+          </div>
         </div>
-        <div class="font-weight-bold flex-grow-1">
-          <a
-            href="#"
-            class="section-link text-md text-black"
-            [routerLink]="['/user', post.author?._id]"
-          >
-            {{ post.author?.username }}
-          </a>
-        </div>
-        <div class="pr-2">
-          <app-user-action-dialog
-            [post]="post"
-            [userId]="user._id"
-          ></app-user-action-dialog>
-        </div>
-      </div>
-      <div class="d-post-box-left">
-        <div class="">
-          <div class="d-post-gallery">
-            <div class="w-100 h-100">
-              <swiper
-                [slidesPerView]="1"
-                [spaceBetween]="50"
-                (slideChange)="onSlideChange()"
-                [navigation]="true"
-                [pagination]="{ clickable: true }"
-                [scrollbar]="{ draggable: true }"
-                class="h-100"
-              >
-                <ng-template
-                  *ngFor="let image of post.images; let i = index"
-                  swiperSlide
-                  class="text-white text-center"
+        <div class="d-post-box-left">
+          <div class="">
+            <div class="d-post-gallery">
+              <div class="w-100 h-100">
+                <swiper
+                  [slidesPerView]="1"
+                  [spaceBetween]="50"
+                  (slideChange)="onSlideChange()"
+                  [navigation]="true"
+                  [pagination]="{ clickable: true }"
+                  [scrollbar]="{ draggable: true }"
+                  class="h-100"
                 >
-                  <div
-                    class="d-post-img"
-                    [ngStyle]="{
-                      backgroundImage: getBackgroundImageUrl(image)
-                    }"
-                  ></div>
-                </ng-template>
-              </swiper>
+                  <ng-template
+                    *ngFor="let image of post.images; let i = index"
+                    swiperSlide
+                    class="text-white text-center"
+                  >
+                    <div
+                      class="d-post-img"
+                      [ngStyle]="{
+                        backgroundImage: getBackgroundImageUrl(image)
+                      }"
+                    ></div>
+                  </ng-template>
+                </swiper>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="d-post-box-right">
-        <div class="d-post-box-right-container">
-          <div class="d-post-contents">
-            <!-- Post Detail -->
-            <div class="d-post-detail">
-              <div class="row d-post-detail-functions">
-                <div class="col-md-12">
-                  <div class="d-flex">
-                    <div>
-                      <app-likes
-                        [isLiked]="isPostLiked(post, user._id)"
-                        [postId]="post._id"
-                        [userId]="user._id"
-                        [likeStyle]="{ color: '#c51104' }"
-                      >
-                      </app-likes>
+        <div class="d-post-box-right">
+          <div class="d-post-box-right-container">
+            <div class="d-post-contents">
+              <!-- Post Detail -->
+              <div class="d-post-detail">
+                <div class="row d-post-detail-functions">
+                  <div class="col-md-12">
+                    <div class="d-flex">
+                      <div>
+                        <app-likes
+                          [isLiked]="isPostLiked(post, user._id)"
+                          [postId]="post._id"
+                          [userId]="user._id"
+                          [likeStyle]="{ color: '#c51104' }"
+                        >
+                        </app-likes>
+                      </div>
+                      <div class="ms-2">
+                        <mat-icon>bookmark_border</mat-icon>
+                      </div>
                     </div>
-                    <div class="ms-2">
-                      <mat-icon>bookmark_border</mat-icon>
+                  </div>
+                </div>
+                <div class="row d-post-detail-likes">
+                  <div class="col-md-12">
+                    <div class="d-flex align-items-center">
+                      <app-like-user-dialog
+                        [post]="post"
+                      ></app-like-user-dialog>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row d-post-detail-likes">
-                <div class="col-md-12">
-                  <div class="d-flex align-items-center">
-                    <app-like-user-dialog [post]="post"></app-like-user-dialog>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div class="d-post-comments">
-              <div class="d-flex align-items-center mb-2">
-                <div class="pe-3">
+              <div class="d-post-comments">
+                <div class="d-flex align-items-center mb-2">
+                  <div class="pe-3">
+                    <a
+                      class="section-link text-black"
+                      href="#"
+                      [routerLink]="['/user', post.author?._id]"
+                    >
+                      {{ post.author?.username }}
+                    </a>
+                    <strong> </strong>
+                  </div>
+                  <div class="section-content">
+                    {{
+                      post.content.length > 200
+                        ? post.content.substring(0, 100) + '...'
+                        : post.content
+                    }}
+                  </div>
+                </div>
+                <div class="mb-3">
                   <a
-                    class="section-link text-black"
+                    class="section-link fw-normal text-sm text-black-50"
                     href="#"
-                    [routerLink]="['/user', post.author?._id]"
+                    (click)="openDialog(post, $event)"
+                    >View all Comments</a
                   >
-                    {{ post.author?.username }}
+                </div>
+                <div class="mb-3">
+                  <a
+                    href="#"
+                    class="section-link fw-normal text-xs text-black-50"
+                    (click)="openDialog(post, $event)"
+                  >
+                    {{ post.createdAt | postTime }}
                   </a>
-                  <strong> </strong>
-                </div>
-                <div class="section-content">
-                  {{
-                    post.content.length > 200
-                      ? post.content.substring(0, 100) + "..."
-                      : post.content
-                  }}
                 </div>
               </div>
-              <div class="mb-3">
-                <a
-                  class="section-link fw-normal text-sm text-black-50"
-                  href="#"
-                  (click)="openDialog(post, $event)"
-                  >View all Comments</a
-                >
-              </div>
-              <div class="mb-3">
-                <a
-                  href="#"
-                  class="section-link fw-normal text-xs text-black-50"
-                  (click)="openDialog(post, $event)"
-                >
-                  {{ post.createdAt | postTime }}
-                </a>
-              </div>
-            </div>
 
-            <!-- comment -->
-            <div class="d-post-comment-write">
-              <app-comment-create
-                [post]="post"
-                [user]="user"
-              ></app-comment-create>
+              <!-- comment -->
+              <div class="d-post-comment-write">
+                <app-comment-create
+                  [post]="post"
+                  [user]="user"
+                ></app-comment-create>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="list-group">
+    <a
+      class="list-group-item list-group-item-action"
+      *ngFor="let i of listArray"
+    >
+      <p class="mb-1">{{ i }} Item added on {{ direction }}</p>
+    </a>
   </div>
 </div>

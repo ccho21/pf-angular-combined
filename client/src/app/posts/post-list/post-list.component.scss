@@ -1,3 +1,5 @@
+
+
 .post {
   &-box {
     position: relative;
@@ -8,14 +10,14 @@
     box-shadow: 3px 2px 7px rgba(0, 0, 0, 0.75);
 
     &:before {
-      content: "";
+      content: '';
       display: block;
       padding-top: 100%;
     }
 
     &:hover {
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
@@ -62,4 +64,3 @@
     }
   }
 }
-

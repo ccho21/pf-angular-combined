@@ -32,11 +32,14 @@ export class PostListFullComponent implements OnInit {
   default: string =
     'https://firebasestorage.googleapis.com/v0/b/bulletin-board-d1815.appspot.com/o/uploads%2F1582746081704_ayo-ogunseinde-2.jpg?alt=media&token=cbc87b46-e85a-4de3-93c3-416dd289b2f1';
 
-  constructor(
-    private postService: PostService,
-    private dialog: MatDialog,
-    private store: Store
-  ) {}
+  listArray: string[] = [];
+  page = 1;
+  direction = '';
+
+  throttle = 300;
+  scrollDistance = 0;
+
+  constructor(private postService: PostService, private store: Store) {}
 
   ngOnInit(): void {
     console.log('### POST FULL COMPONENTS ###');
@@ -66,5 +69,16 @@ export class PostListFullComponent implements OnInit {
   // LIKE FUNCTIONS
   isPostLiked(post: Post, userId?: string) {
     return this.postService.isLikedByUser(post, userId);
+  }
+
+  //
+  onScrollDown(ev: any) {
+    console.log('scrolled down!!', ev);
+    this.appendPosts();
+  }
+
+  appendPosts() {
+    this.page++;
+    this.postService.addPosts(this.page).subscribe((val) => console.log(val));
   }
 }

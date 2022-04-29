@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import {
+  addPosts,
   commentUpdated,
   likeUpdated,
   postCreated,
@@ -31,12 +32,23 @@ export class PostService {
     private router: Router,
     private dialog: MatDialog
   ) {}
-  
+
   loadPosts(): Observable<Post[]> {
     return this.http.get('/api/posts').pipe(
       map((res: any) => {
-        console.log(res);
+        // console.log(res);
         const { data } = res;
+        return data as Post[];
+      })
+    );
+  }
+
+  addPosts(page: number): Observable<Post[]> {
+    console.log('working ', page);
+    return this.http.get(`/api/posts?limit=1&page=${page}`).pipe(
+      map((res: any) => {
+        const { data } = res;
+        this.store.dispatch(addPosts({ posts: data }));
         return data as Post[];
       })
     );
