@@ -3,15 +3,34 @@ const User = require('../models/User');
 const Like = require('../models/Like');
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
+const APIFeatures = require('../util/apiFeatures');
+
+exports.defaultParam = (req, res, next) => {
+  if (!req.query.limit) {
+    req.query.limit = '1';
+  }
+  if (!req.query.sort) {
+    req.query.sort = '-createdAt';
+  }
+  next();
+};
 
 // get user with id
 exports.getPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort({ date: -1 });
-    // console.log('### posts', posts);
-    res.json(posts);
+    const features = new APIFeatures(Post.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const posts = await features.query;
+    res.json({
+      status: 'success',
+      results: posts.length,
+      data: posts,
+    });
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
     res.status(500).send('Server Error');
   }
 };
@@ -78,7 +97,7 @@ exports.deletePost = async (req, res) => {
 
     // Remove all comments related to this post
     if (post.comments.length) {
-      const comments = await Comment.find({ parentId: req.params.id });
+      const comments = await Comment.find({ postId: req.params.id });
       const commentIds = comments.map((comment) => comment._id);
       await Comment.deleteMany({ _id: commentIds });
     }

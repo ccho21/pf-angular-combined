@@ -62,6 +62,7 @@ export class CommentCreateComponent implements OnInit {
     const regex = new RegExp(this.nameTag as string, 'g');
     const comment: Comment = {
       parentId: postId,
+      postId: postId,
       author: this.user,
       content: this.form.get('content')?.value.replace(regex, '').trim(),
     };

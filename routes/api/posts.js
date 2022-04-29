@@ -9,7 +9,7 @@ const postController = require('../../controllers/postController');
 //  @desc       get all posts
 //  @access     Private
 
-router.get('/', auth, postController.getPosts);
+router.get('/', [auth, postController.defaultParam], postController.getPosts);
 
 //  @route      GET api/posts/:id
 //  @desc       Get post by ID

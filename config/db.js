@@ -13,9 +13,16 @@ const connectDB = async () => {
       useCreateIndex: true,
       useFindAndModify: false,
     });
+
+    // eslint-disable-next-line no-console
+    // console.log(con.connections);
+
+    // eslint-disable-next-line no-console
     console.log('MongoDB Connected...');
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err.message);
+
     // Exit process with failure
     process.exit(1);
   }

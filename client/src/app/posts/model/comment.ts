@@ -7,6 +7,7 @@ export interface Comment {
   likes?: Array<Like>;
   author: User;
   parentId: string;
+  postId: string;
   replyTo?: string;
   comments?: Array<Comment>;
   createdAt?: string;

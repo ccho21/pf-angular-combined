@@ -1,25 +1,27 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const morgan = require('morgan');
+
 const app = express();
 
 // Connect Database
 connectDB();
 
-// Init Middleware
-app.use(express.json());
-
 //  CUSTOM
-
 const path = require('path');
 const cors = require('cors');
-// const fileUpload = require('express-fileupload');
 
 // Init Middleware
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cors());
+
+// 1) MIDDLEWARES
+if (process.env.NODE_ENV === 'development') {
+  // It checks how much time it takes to get the response.
+  app.use(morgan('dev'));
+}
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));

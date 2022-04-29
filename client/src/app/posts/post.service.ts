@@ -31,11 +31,13 @@ export class PostService {
     private router: Router,
     private dialog: MatDialog
   ) {}
+  
   loadPosts(): Observable<Post[]> {
     return this.http.get('/api/posts').pipe(
-      map((res) => {
+      map((res: any) => {
         console.log(res);
-        return res as Post[];
+        const { data } = res;
+        return data as Post[];
       })
     );
   }
@@ -50,58 +52,47 @@ export class PostService {
 
   savePost(postId: string, post: Partial<Post>): Observable<Post> {
     postId = postId ? postId : '';
-    return this.http
-      .post<Post>(`/api/posts/${postId}`, post)
-      .pipe(
-        tap((post: Post) => {
-          this.store.dispatch(postCreated({ post }));
-          this.router.navigateByUrl('/posts');
-        })
-      );
+    return this.http.post<Post>(`/api/posts/${postId}`, post).pipe(
+      tap((post: Post) => {
+        this.store.dispatch(postCreated({ post }));
+        this.router.navigateByUrl('/posts');
+      })
+    );
   }
 
   updatePost(postId: string, changes: Partial<Post>): Observable<Post> {
     console.log('POST Id ', postId, '### CHANGES ', changes);
     postId = postId ? postId : '';
-    return this.http
-      .put<Post>(`/api/posts/${postId}`, changes)
-      .pipe(
-        tap((post: Post) => {
-          console.log('[UPDATE POST EFFECT] has been done successfuly', post);
-        })
-      );
+    return this.http.put<Post>(`/api/posts/${postId}`, changes).pipe(
+      tap((post: Post) => {
+        console.log('[UPDATE POST EFFECT] has been done successfuly', post);
+      })
+    );
   }
 
   deletePost(postId: string) {
-    return this.http
-      .delete<Post>(`/api/posts/${postId}`)
-      .pipe(
-        tap((post: Post) => {
-          console.log('[DELETE POST] has been done successfuly', post);
-          this.store.dispatch(postDeleted({ id: postId }));
-        })
-      );
+    return this.http.delete<Post>(`/api/posts/${postId}`).pipe(
+      tap((post: Post) => {
+        console.log('[DELETE POST] has been done successfuly', post);
+        this.store.dispatch(postDeleted({ id: postId }));
+      })
+    );
   }
 
   addComment(comment: Comment, postId: string): Observable<Post> {
-    return this.http
-      .post<Comment[]>(
-        `/api/comments/p/${postId}`,
-        comment
-      )
-      .pipe(
-        tap((res: any) => {
-          console.log('### COMMENT OUTCOME', res);
-          const post = {
-            comments: res,
-          };
-          const update: Update<Post> = {
-            id: postId,
-            changes: post,
-          };
-          this.store.dispatch(commentUpdated({ update }));
-        })
-      );
+    return this.http.post<Comment[]>(`/api/comments/p/${postId}`, comment).pipe(
+      tap((res: any) => {
+        console.log('### COMMENT OUTCOME', res);
+        const post = {
+          comments: res,
+        };
+        const update: Update<Post> = {
+          id: postId,
+          changes: post,
+        };
+        this.store.dispatch(commentUpdated({ update }));
+      })
+    );
   }
 
   addSubComment(
@@ -111,10 +102,7 @@ export class PostService {
   ): Observable<Post> {
     commentId = commentId ? commentId : '';
     return this.http
-      .post<Comment[]>(
-        `/api/comments/p/${postId}/r/${commentId}`,
-        comment
-      )
+      .post<Comment[]>(`/api/comments/p/${postId}/r/${commentId}`, comment)
       .pipe(
         tap((res: any) => {
           console.log('### COMMENT OUTCOME', res);
@@ -137,10 +125,7 @@ export class PostService {
   ): Observable<Like[] | Comment[]> {
     commentId = commentId ? `c/${commentId}` : '';
     return this.http
-      .post<Like[] | Comment[]>(
-        `/api/likes/p/${postId}/${commentId}`,
-        {}
-      )
+      .post<Like[] | Comment[]>(`/api/likes/p/${postId}/${commentId}`, {})
       .pipe(
         tap((res: Like[] | Comment[]) => {
           if (commentId) {
@@ -158,10 +143,7 @@ export class PostService {
   ): Observable<Like[] | Comment[]> {
     commentId = commentId ? `c/${commentId}` : '';
     return this.http
-      .delete<Like[] | Comment[]>(
-        `/api/likes/p/${postId}/${commentId}`,
-        {}
-      )
+      .delete<Like[] | Comment[]>(`/api/likes/p/${postId}/${commentId}`, {})
       .pipe(
         tap((res: Like[] | Comment[]) => {
           if (commentId) {
@@ -203,14 +185,12 @@ export class PostService {
   //  Views service
   addView(postId: string): Observable<View[]> {
     console.log('add view working?', postId);
-    return this.http
-      .put<View[]>(`/api/views/${postId}`, {})
-      .pipe(
-        map((res: View[]) => {
-          console.log('RES!!! in VIEW', res);
-          return res;
-        })
-      );
+    return this.http.put<View[]>(`/api/views/${postId}`, {}).pipe(
+      map((res: View[]) => {
+        console.log('RES!!! in VIEW', res);
+        return res;
+      })
+    );
   }
 
   //Subject to populate the data on comment create comment

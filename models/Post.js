@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const Populate = require('../util/autopopulate');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 const PostSchema = new mongoose.Schema({
   author: {
     type: Schema.Types.ObjectId,
     ref: 'user',
+    required: true,
   },
   comments: [{ type: Schema.Types.ObjectId, ref: 'comment' }],
   likes: [{ type: Schema.Types.ObjectId, ref: 'like' }],
